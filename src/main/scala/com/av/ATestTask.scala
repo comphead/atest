@@ -99,6 +99,12 @@ object ATest {
       */
 
     type T3 = (Int, Long, Long, String)
+    
+     /**
+      * Custom aggregation to calculate sessionIds, startTimes, endTiems. Unlike to window functions, trying to calculate everything in 1 run
+      */
+    
+    
 
     class Aggr extends Aggregator[Row, (String, T3), String] with Serializable {
 
