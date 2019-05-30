@@ -123,6 +123,9 @@ object ATest {
           case _ => t
         }
 
+        /*
+        gathering collection of times for smaller window containing sessionId
+        */
         buffer.put(key, updated.copy(_4 = updated._4 + "," + updated._1 + "#" + ts.toString))
 
         (key, buffer(key))
@@ -132,6 +135,10 @@ object ATest {
       override def outputEncoder: Encoder[String] = Encoders.STRING
 
       override def merge(b1: (String, T3), b2: (String, T3)): (String, T3) = {
+        /*
+        calculating latest ts for the smaller window per sessionId and applying it for session window
+        */
+        
         val latest = b2._2._4
           .split(",").filter(_.nonEmpty).map(x => x.split("#") match {
           case Array(s1, s2) => (s1.toInt, s2.toLong)
